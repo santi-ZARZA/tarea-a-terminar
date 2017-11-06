@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1509978749 source:c:\users\alumno\desktop\proyecto steam\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
