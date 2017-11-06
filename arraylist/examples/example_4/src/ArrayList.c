@@ -266,8 +266,11 @@ int al_clear(ArrayList* this)
         {
             for(i=0; i<=this->len(this) ;i++)
             {
-                al_remove(this,i);
+                free(*(this->pElements+i));
             }
+            this->size = 0;
+            returnAux = 0;
+
         }
 
     return returnAux;
@@ -458,25 +461,32 @@ int al_containsAll(ArrayList* this,ArrayList* this2)
 {
     int returnAux = -1;
     int bandera = 0;
-    int i;
+    int cont = 0;
+    int i,j;
 
     if(this != NULL && this2 != NULL)
     {
-        for(i=0;i<this->size;i++)
+        for(i=0;i<this2->size;i++)
         {
-            if(al_contains(this2,*(this->pElements+i)) == 0)
+            for(j=0;j<this->size;j++)
             {
-                bandera = 1;
+                if(*(this2->pElements+i) == *(this->pElements+j))
+                {
+                    bandera = 1;
+                    cont++;
+                    break;
+                }
             }
         }
-        if(bandera == 1)
-        {
-            returnAux = 0;
-        }
-        else
+        if(bandera == 1 && cont == this2->size)
         {
             returnAux = 1;
         }
+        else
+        {
+          returnAux = 0;
+        }
+
     }
 
     return returnAux;
@@ -492,11 +502,41 @@ int al_containsAll(ArrayList* this,ArrayList* this2)
 int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
 {
     int returnAux = -1;
-    //int i,j;
+    void* auxiliar = NULL;
+    int i,j;
 
-        if(this != NULL)
+        if(this != NULL && pFunc != NULL)
         {
-
+            if(order == 1)
+            {
+                for(i=0;i<this->size-1;i++)
+                {
+                    for(j=i+1;j<this->size;j++)
+                    {
+                        if(pFunc(*(this->pElements+i),*(this->pElements+j))>0)
+                        {
+                            auxiliar = *(this->pElements+i);
+                            *(this->pElements+i) = *(this->pElements+j);
+                            *(this->pElements+j) = auxiliar;
+                        }
+                    }
+                }
+            }
+            if(order == 0)
+            {
+                for(i=0;i<this->size-1;i++)
+                {
+                    for(j=i+1;j<this->size;j++)
+                    {
+                        if(pFunc(*(this->pElements+i),*(this->pElements+j))<0)
+                        {
+                            auxiliar = *(this->pElements+i);
+                            *(this->pElements+i) = *(this->pElements+j);
+                            *(this->pElements+j) = auxiliar;
+                        }
+                    }
+                }
+            }
         }
 
     return returnAux;

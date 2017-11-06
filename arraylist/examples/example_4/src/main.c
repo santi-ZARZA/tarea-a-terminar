@@ -34,12 +34,12 @@
 //        startTesting(8);--->  //RESUELTA AL_REMOVE (  PREGUNTAR POR NOTACION DE PUNTEROS  )
 //        startTesting(9);--->  // AL_CLEAR
 //        startTesting(10);--->  //RESUELTA AL_CLONE
-//        startTesting(11);--->  // AL_PUSH
+//        startTesting(11);--->  //RESUELTA AL_PUSH
 //        startTesting(12);--->  //RESUELTA AL_INDEXOF
 //        startTesting(13);--->  //RESUELTA AL_ISEMPTY
-//        startTesting(14);--->  // AL_POP
-//        startTesting(15);--->  // AL_SUBLIST
-//        startTesting(16);--->  // AL_CONTAINSALL
+//        startTesting(14);--->  //RESUELTA AL_POP
+//        startTesting(15);--->  //RESUELTA AL_SUBLIST
+//        startTesting(16);--->  //RESUELTA AL_CONTAINSALL
 //        startTesting(17);--->  // AL_SORT
 
 
@@ -53,15 +53,15 @@ int main(void)
         startTesting(6);
         startTesting(7);
         startTesting(8);
-//        startTesting(9);
+        startTesting(9);        /// preguntarle al profe por el clear
         startTesting(10);
         startTesting(11);
         startTesting(12);
         startTesting(13);
         startTesting(14);
         startTesting(15);
-//        startTesting(16);
-//        startTesting(17);
+        startTesting(16);
+        startTesting(17);
 
     return 0;
 }
