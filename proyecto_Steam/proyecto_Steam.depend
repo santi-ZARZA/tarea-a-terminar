@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1510023108 source:c:\users\santiago\desktop\proyecto_steam\main.c
+	"funciones.h"
+	<string.h>
+	<ctype.h>
+	<conio.h>
+	<stdio.h>
+	<stdlib.h>
+
+1510021135 c:\users\santiago\desktop\proyecto_steam\funciones.h
+
+1510022951 source:c:\users\santiago\desktop\proyecto_steam\funciones.c
+	"funciones.h"
+	<string.h>
+	<ctype.h>
+	<conio.h>
+	<stdio.h>
+	<stdlib.h>
+
