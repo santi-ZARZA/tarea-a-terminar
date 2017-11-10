@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1510023108 source:c:\users\santiago\desktop\proyecto_steam\main.c
+1510185012 source:c:\users\santiago\desktop\proyecto_steam\main.c
 	"funciones.h"
 	<string.h>
 	<ctype.h>
@@ -7,13 +7,23 @@
 	<stdio.h>
 	<stdlib.h>
 
-1510021135 c:\users\santiago\desktop\proyecto_steam\funciones.h
+1510285960 c:\users\santiago\desktop\proyecto_steam\funciones.h
+	"ArrayList.h"
 
-1510022951 source:c:\users\santiago\desktop\proyecto_steam\funciones.c
+1510278297 source:c:\users\santiago\desktop\proyecto_steam\funciones.c
+	"ArrayList.h"
 	"funciones.h"
 	<string.h>
 	<ctype.h>
 	<conio.h>
 	<stdio.h>
 	<stdlib.h>
+
+1510186201 source:c:\users\santiago\desktop\proyecto_steam\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1510185295 c:\users\santiago\desktop\proyecto_steam\arraylist.h
 

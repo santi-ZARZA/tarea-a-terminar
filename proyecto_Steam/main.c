@@ -9,7 +9,6 @@ int main()
 {
     char seguir = 's';
     char opcion;
-    //void (*menu)();
 
     do
     {
@@ -24,7 +23,6 @@ int main()
         switch(opcion)
         {
             case 13:
-                //system("cls");
                 menu();
                 break;
             default:

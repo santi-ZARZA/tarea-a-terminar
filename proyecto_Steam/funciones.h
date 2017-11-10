@@ -1,3 +1,4 @@
+#include "ArrayList.h"
 #define GENERO_ACCION 1
 #define GENERO_AVENTURA 2
 #define GENERO_TERROR 3
@@ -24,10 +25,28 @@ typedef struct
 }eGame;
 
 
-eJugador* new_jugador();
+void new_jugador(ArrayList*);
 
-eGame* new_game();
+void new_game(ArrayList*);
 
-void mostrarTodo(eJugador*,eGame*);
+void mostrarTodo(ArrayList*,ArrayList*);
 
 void menu();
+
+void Eliminar(ArrayList*,ArrayList*);
+
+void Modificar(ArrayList*,ArrayList*);
+
+void Modificar_jugador(ArrayList*);
+
+void Modificar_juego(ArrayList*);
+
+void Baja_Jugador(ArrayList*);
+
+void Baja_Juego(ArrayList*);
+
+void Bajas(ArrayList*,ArrayList*);
+
+void Baja_Jugadores(ArrayList*);
+
+void Baja_Juegos(ArrayList*);
