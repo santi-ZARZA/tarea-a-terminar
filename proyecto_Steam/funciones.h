@@ -50,3 +50,13 @@ void Bajas(ArrayList*,ArrayList*);
 void Baja_Jugadores(ArrayList*);
 
 void Baja_Juegos(ArrayList*);
+
+void Mostrar_Juegos(ArrayList*);
+
+int Orden_General();
+
+int Compara_juegos(void*, void*);
+
+void Mostrar_Jugadores(ArrayList*);
+
+int Compara_jugadores(void*, void*);

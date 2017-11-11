@@ -29,7 +29,7 @@ void new_jugador(ArrayList* lista)
             printf("3. Ingrese su E-mail: ");
             fflush(stdin);
             gets(E_mail);
-            Usuario = 1000;
+            Usuario = 1000+lista->len(lista);
 
             strcpy(jugador->Nick,Nick);
             strcpy(jugador->contrasena,contrasena);
@@ -103,7 +103,7 @@ void new_game(ArrayList* lista)
                 }
             }while(ban == 0);
 
-            Juego = 100;
+            Juego = 100+lista->len(lista);
 
             strcpy(videojuego->Nombre,Nombre);
             strcpy(videojuego->Desarrolladora,Desarrolladora);
@@ -118,32 +118,50 @@ void new_game(ArrayList* lista)
         }
 }
 
-void mostrarTodo(ArrayList* juegos,ArrayList* jugadores)
+void mostrarTodo(ArrayList* jugadores,ArrayList* juegos)
 {
     char opcion;
-    system("cls");
-    printf("*****************************************************************\n");
-    printf("*  1. [JUEGOS] ** 2. [JUGADORES] ** 3. [JUEGOS Y JUGADORES]     *\n");
-    printf("*****************************************************************\n");
-    printf("*  4. [JUGADOR/JUEGOS]      **      5. [JUEGO/JUGADORES]        *\n");
-    printf("*****************************************************************\n");
-    printf("\nIngrese la opcion deseada: ");
-    fflush(stdin);
-    opcion = getch();
+    char seguir= 's';
 
-    switch(opcion)
+    do
     {
-        case '1':
-            break;
-        case '2':
-            break;
-        case '3':
-            break;
-        case '4':
-            break;
-        case '5':
-            break;
-    }
+        system("cls");
+        printf("*****************************************************************\n");
+        printf("*   1. [JUEGOS]X   2. [JUGADORES]X   3. [JUEGOS Y JUGADORES]      *\n");
+        printf("*****************************************************************\n");
+        printf("*       4. [JUGADOR/JUEGOS]         5. [JUEGO/JUGADORES]        *\n");
+        printf("*****************************************************************\n");
+        printf("*                         6. [SALIR]                            *\n");
+        printf("*****************************************************************\n");
+        printf("\nIngrese la opcion deseada: ");
+        fflush(stdin);
+        opcion = getche();
+
+        switch(opcion)
+        {
+            case '1':
+                Mostrar_Juegos(juegos);
+                break;
+            case '2':
+                Mostrar_Jugadores(jugadores);
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
+            case '5':
+                break;
+            case '6':
+                seguir = 'n';
+                break;
+            default:
+              system("cls");
+              printf("\n\nLa opcion ingresada es invalida\n------->REINGRESE<-------\n");
+              system("pause");
+        }
+
+    }while(seguir == 's');
+
 }
 
 void menu()
@@ -172,7 +190,7 @@ void menu()
             printf("*************************************************************\n");
             printf("\nIngrese la opcion deseada: ");
             fflush(stdin);
-            opcion = getch();
+            opcion = getche();
 
             switch(opcion)
             {
@@ -733,4 +751,133 @@ void Baja_Juegos(ArrayList* this)
             printf("\n\nNo hay juegos cargados para dar los de baja.\n");
             system("pause");
         }
+}
+
+int Orden_General()
+{
+    char Opcion;
+    int retornado;
+    char seguir = 's';
+
+    do
+    {
+        system("cls");
+        printf("************************************************\n");
+        printf("************* [ Ingrese el Orden ] *************\n");
+        printf("***** 1. [ Acendente ]    2. [ Decendente ] ****\n");
+        fflush(stdin);
+        Opcion = getch();
+
+        switch(Opcion)
+        {
+            case '1':
+                retornado = 1;
+                seguir = 'n';
+                break;
+            case '2':
+                retornado = 0;
+                seguir = 'n';
+                break;
+            default:
+                system("cls");
+                printf("Opcion ingresada incorecta\n---------> Reingrese<---------\n");
+                system("pause");
+        }
+    }while(seguir == 's');
+
+    return retornado;
+}
+
+void Mostrar_Juegos(ArrayList* this)
+{
+    int orden;
+    eGame* juego;
+    int i;
+    if(this != NULL)
+    {
+         if(!al_isEmpty(this))
+         {
+           orden = Orden_General();
+
+           if(!al_sort(this,Compara_juegos,orden))
+           {
+               system("cls");
+               printf("*****************************************************\n");
+               printf("*************---------->JUEGOS<-------***************\n\n");
+               for(i=0; i<this->len(this) ;i++)
+                {
+                    juego = (eGame*) al_get(this,i);
+                    printf("*  [ %d ] ------------> %s\n",i,juego->Nombre);
+                }
+               printf("*****************************************************\n");
+               system("pause");
+           }
+         }
+    }
+}
+
+int Compara_juegos(void* juegoX, void* juegoZ)
+{
+    int retorno = 0;
+
+    if(juegoX != NULL && juegoZ != NULL)
+    {
+        if(strcmp(((eGame*)juegoX)->Nombre,((eGame*)juegoZ)->Nombre) > 0)
+        {
+            retorno = 1;
+        }
+        if(strcmp(((eGame*)juegoX)->Nombre,((eGame*)juegoZ)->Nombre) < 0)
+        {
+            retorno = -1;
+        }
+    }
+
+    return retorno;
+}
+
+void Mostrar_Jugadores(ArrayList* this)
+{
+    int orden;
+    eJugador* jugador;
+    int i;
+    if(this != NULL)
+    {
+         if(!al_isEmpty(this))
+         {
+           orden = Orden_General();
+
+           if(!al_sort(this,Compara_jugadores,orden))
+           {
+               system("cls");
+               printf("********************************************************\n");
+               printf("*************---------->JUGADORES<-------***************\n\n");
+               for(i=0; i<this->len(this) ;i++)
+                {
+                    jugador = (eJugador*) al_get(this,i);
+                    printf("*  [ %d ] ------------> %s\n",i,jugador->Nick);
+                }
+               printf("*****************************************************\n");
+               system("pause");
+           }
+         }
+    }
+}
+
+int Compara_jugadores(void* jugadorX, void* jugadorZ)
+{
+    int retorno = 0;
+
+    if(jugadorX != NULL && jugadorZ != NULL)
+    {
+        if(strcmp(((eJugador*)jugadorX)->Nick,((eJugador*)jugadorZ)->Nick) > 0)
+        {
+            retorno = 1;
+        }
+        if(strcmp(((eJugador*)jugadorX)->Nick,((eJugador*)jugadorZ)->Nick) < 0)
+        {
+            retorno = -1;
+        }
+    }
+
+    return retorno;
 }
