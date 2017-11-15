@@ -33,8 +33,6 @@ void mostrarTodo(ArrayList*,ArrayList*);
 
 void menu();
 
-void Eliminar(ArrayList*,ArrayList*);
-
 void Modificar(ArrayList*,ArrayList*);
 
 void Modificar_jugador(ArrayList*);
@@ -60,3 +58,7 @@ int Compara_juegos(void*, void*);
 void Mostrar_Jugadores(ArrayList*);
 
 int Compara_jugadores(void*, void*);
+
+void Cargar_juego(ArrayList*,ArrayList*);
+
+void Mostrar_Juegos_Jugadores(ArrayList*,ArrayList*);
