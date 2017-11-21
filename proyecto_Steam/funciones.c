@@ -23,7 +23,7 @@ void new_jugador(ArrayList* lista)
             printf("1. Ingrese su nombre de usuario: ");
             fflush(stdin);
             gets(Nick);
-            printf("2. Ingrese su contraseña: ");
+            printf("2. Ingrese su contraseÃ±a: ");
             fflush(stdin);
             gets(contrasena);
             printf("3. Ingrese su E-mail: ");
@@ -118,7 +118,7 @@ void new_game(ArrayList* lista)
         }
 }
 
-void mostrarTodo(ArrayList* jugadores,ArrayList* juegos)
+void mostrarTodo(ArrayList* jugadores,ArrayList* juegos,ArrayList* cargas)
 {
     char opcion;
     char seguir= 's';
@@ -129,7 +129,7 @@ void mostrarTodo(ArrayList* jugadores,ArrayList* juegos)
         printf("*****************************************************************\n");
         printf("*   1. [JUEGOS]X   2. [JUGADORES]X   3. [JUEGOS Y JUGADORES]    *\n");
         printf("*****************************************************************\n");
-        printf("*       4. [JUGADOR/JUEGOS]         5. [JUEGO/JUGADORES]        *\n");
+        printf("*    4. [JUGADORES Y JUEGOS]         5. [JUGADOR/JUEGOS]        *\n");
         printf("*****************************************************************\n");
         printf("*                         6. [SALIR]                            *\n");
         printf("*****************************************************************\n");
@@ -146,9 +146,10 @@ void mostrarTodo(ArrayList* jugadores,ArrayList* juegos)
                 Mostrar_Jugadores(jugadores);
                 break;
             case '3':
-                Mostrar_Juegos_Jugadores(juegos,jugadores);
+                Mostrar_Juegos_Jugadores(juegos,jugadores,cargas);
                 break;
             case '4':
+                Mostrar_Jugadores_Juegos(juegos,jugadores,cargas);
                 break;
             case '5':
                 break;
@@ -174,9 +175,11 @@ void menu()
 
     ArrayList* lista_jugadores = al_newArrayList();
     ArrayList* lista_juegos = al_newArrayList();
+    ArrayList* lista_cargados = al_newArrayList();
 
-    if(lista_juegos != NULL && lista_jugadores != NULL)
+    if(lista_juegos != NULL && lista_jugadores != NULL && lista_cargados != NULL)
     {
+        Harcodeados(lista_juegos,lista_jugadores,lista_cargados);
         do
         {
             system("cls");
@@ -202,16 +205,16 @@ void menu()
                         new_game(lista_juegos);
                         break;
                     case '3':
-                        mostrarTodo(lista_jugadores,lista_juegos);
+                        mostrarTodo(lista_jugadores,lista_juegos,lista_cargados);
                         break;
                     case '4':
                         Modificar(lista_juegos,lista_jugadores);
                         break;
                     case '5':
-
+                        Bajas(lista_juegos,lista_jugadores);
                         break;
                     case '6':
-                        Cargar_juego(lista_juegos,lista_jugadores);
+                        Cargar_juego(lista_juegos,lista_jugadores,lista_cargados);
                         break;
                     case '7':
                         free(lista_juegos);
@@ -402,7 +405,7 @@ void Modificar_jugador(ArrayList* this)
                 printf("\nIngrese el NUMERO de la posicion del Jugador a modificar: ");
                 scanf("%d",&posicion);
 
-                Modificado = (eJugador*) al_get(this,posicion);
+                Modificado = (eJugador*) al_pop(this,posicion);
 
                 if(Modificado != NULL)
                 {
@@ -426,7 +429,7 @@ void Modificar_jugador(ArrayList* this)
 
                             strcpy(Modificado->Nick,Nick);
 
-                            al_set(this,posicion,Modificado);
+                            al_push(this,posicion,Modificado);
                             break;
                         case '2':
                             system("cls");
@@ -436,7 +439,7 @@ void Modificar_jugador(ArrayList* this)
 
                             strcpy(Modificado->contrasena,contrasena);
 
-                            al_set(this,posicion,Modificado);
+                            al_push(this,posicion,Modificado);
                             break;
                         case '3':
                             system("cls");
@@ -446,7 +449,7 @@ void Modificar_jugador(ArrayList* this)
 
                             strcpy(Modificado->E_mail,E_mail);
 
-                            al_set(this,posicion,Modificado);
+                            al_push(this,posicion,Modificado);
                             break;
                         default:
                             printf("\n\nLa opcion ingresada es invalida\n\n");
@@ -779,7 +782,7 @@ void Mostrar_Juegos(ArrayList* this)
                for(i=0; i<this->len(this) ;i++)
                 {
                     juego = (eGame*) al_get(this,i);
-                    printf("*  [ %d ] ------------> %s\n",i,juego->Nombre);
+                    printf("*  [ %d ] ------------> %s\n",al_indexOf(this,juego),juego->Nombre);
                 }
                printf("*****************************************************\n");
                system("pause");
@@ -826,7 +829,7 @@ void Mostrar_Jugadores(ArrayList* this)
                for(i=0; i<this->len(this) ;i++)
                 {
                     jugador = (eJugador*) al_get(this,i);
-                    printf("*  [ %d ] ------------> %s\n",i,jugador->Nick);
+                    printf("*  [ %d ] ------------> %s\n",al_indexOf(this,jugador),jugador->Nick);
                 }
                printf("*****************************************************\n");
                system("pause");
@@ -854,7 +857,7 @@ int Compara_jugadores(void* jugadorX, void* jugadorZ)
     return retorno;
 }
 
-void Cargar_juego(ArrayList* juegos,ArrayList* jugadores)
+void Cargar_juego(ArrayList* juegos,ArrayList* jugadores,ArrayList* carga)
 {
     int i;
     int posicion;
@@ -863,6 +866,7 @@ void Cargar_juego(ArrayList* juegos,ArrayList* jugadores)
     char password[30];
     eJugador* auxiliar;
     eGame* juego;
+    eCargados* cargado = (eCargados*) malloc(sizeof(eCargados));
 
        if(al_isEmpty(jugadores)== 0)
        {
@@ -905,20 +909,25 @@ void Cargar_juego(ArrayList* juegos,ArrayList* jugadores)
                     printf("Ingrese un puntaje para el Juego; ");
                     scanf("%d",&puntaje);
 
-                    juego->Puntaje = puntaje;
-                    juego->Usuario = auxiliar->Usuario;
+                    cargado->Juego = juego->Juego;
+                    cargado->Usuario = auxiliar->Usuario;
+                    cargado->Puntaje = puntaje;
+
+                    al_add(carga,cargado);
+
                 }
        }
 }
 
-void Mostrar_Juegos_Jugadores(ArrayList* juego,ArrayList* jugador)
+void Mostrar_Juegos_Jugadores(ArrayList* juego,ArrayList* jugador,ArrayList* cargas)
 {
-    int i,j;
+    int i,j,x;
 
     eGame* aux_juego;
     eJugador* aux_jugador;
+    eCargados* aux_cargados;
 
-    if(al_isEmpty(juego)== 0 && al_isEmpty(jugador)== 0)
+    if(al_isEmpty(juego)== 0 && al_isEmpty(jugador)== 0 && al_isEmpty(cargas) == 0)
     {
         system("cls");
         printf("*****************************************************\n");
@@ -927,23 +936,131 @@ void Mostrar_Juegos_Jugadores(ArrayList* juego,ArrayList* jugador)
         {
             aux_juego = (eGame*) al_get(juego,i);
 
-            printf("%s\n",aux_juego->Nombre);
+            printf("%s    DESARROLLADORA: %s\n",aux_juego->Nombre,aux_juego->Desarrolladora);
             printf("------------------------------------------------------\n\n");
 
-            for(j=0;j<al_len(jugador);j++)
+            for(j=0;j<al_len(cargas);j++)
             {
-                aux_jugador = (eJugador*) al_get(jugador,j);
+                aux_cargados =(eCargados*) al_get(cargas,j);
 
-                if(aux_juego->Usuario == aux_jugador->Usuario)
+                if(aux_cargados->Juego == aux_juego->Juego)
                 {
-                    printf("[%d]-->%s\t\t",j,aux_jugador->Nick);
-                    if(!(j%3))
+                        for(x=0;x<al_len(jugador);x++)
+                        {
+                            aux_jugador = (eJugador*) al_get(jugador,x);
+
+                            if(aux_jugador->Usuario == aux_cargados->Usuario)
+                            {
+                                printf("[%d]-->%s\t",x,aux_jugador->Nick);
+                            }
+                        }
+                }
+            }
+            printf("\n********************************************************\n");
+        }
+        printf("\n");
+        system("pause");
+
+    }
+}
+
+void Mostrar_Jugadores_Juegos(ArrayList* juegos,ArrayList* jugadores,ArrayList* cargas)
+{
+    int i,j,x;
+
+    eGame* aux_juego;
+    eJugador* aux_jugador;
+    eCargados * aux_cargas;
+
+    if(al_isEmpty(juegos)== 0 && al_isEmpty(jugadores)== 0 && al_isEmpty(cargas) == 0)
+    {
+        system("cls");
+        printf("********************************************************\n");
+        printf("*************---------->JUGADORES<-------***************\n\n");
+        for(i=0;i<al_len(jugadores);i++)
+        {
+            aux_jugador = (eJugador*) al_get(jugadores,i);
+
+            printf("%s          E-MAIL: %s\n",aux_jugador->Nick,aux_jugador->E_mail);
+            printf("------------------------------------------------------\n\n");
+
+            for(j=0;j<al_len(cargas);j++)
+            {
+                aux_cargas = (eCargados*) al_get(cargas,j);
+
+                if(aux_jugador->Usuario == aux_cargas->Usuario)
+                {
+                    for(x=0;x<al_len(juegos);x++)
                     {
-                        printf("\n\n");
+                        aux_juego = (eGame*) al_get(juegos,x);
+
+                        if(aux_cargas->Juego == aux_juego->Juego)
+                        {
+                          printf("[%d]-->%s\t",x,aux_juego->Nombre);
+                            if(!(x%3))
+                            {
+                                printf("\n\n");
+                            }
+                        }
                     }
                 }
             }
             printf("\n********************************************************\n");
         }
+        printf("\n");
+        system("pause");
     }
+}
+
+void Harcodeados(ArrayList* juegos,ArrayList* jugadores,ArrayList* carga)
+{
+    int Usuario[3]={1000,1001,1002};
+    char Nick[3][20]={"juancito2.0","marKX","santo7792"};
+    char contrasena[3][30]={"juan","mar","santo"};
+    char E_mail[3][35]= {"juan@hotmail.com","marKX@hotmail.com","santo@hotmail.com"};
+
+    int Juego[5]={100,101,102,103,104};
+    char Nombre[5][30]={"Mario Bross","Metal Gear","Assassins Creed","Silent Hill","Fifa 2018"};
+    char Desarrolladora[5][20]={"Nintendo","Konami","Ubisoft Montreal","Konami","Electronic Arts"};
+    int Genero[5]={GENERO_AVENTURA,GENERO_LOGICA,GENERO_ACCION,GENERO_TERROR,GENERO_DEPORTE};
+
+    int idsusuario[7]={1000,1000,1001,1002,1000,1001,1002};
+    int idsjuegos[7]={100,101,101,102,104,103,101};
+    int Puntaje[7]={7,10,9,8,6,5,4};
+
+    eGame* juego = malloc(sizeof(eGame)*5);
+    eJugador* jugador = malloc(sizeof(eJugador)*3);
+    eCargados* cargas = malloc(sizeof(eCargados)*7);
+
+    int i;
+
+    for(i=0;i<3;i++)
+    {
+        (jugador+i)->Usuario = Usuario[i];
+        strcpy((jugador+i)->Nick,Nick[i]);
+        strcpy((jugador+i)->contrasena,contrasena[i]);
+        strcpy((jugador+i)->E_mail,E_mail[i]);
+
+        al_add(jugadores,(jugador+i));
+    }
+
+    for(i=0;i<5;i++)
+    {
+        (juego+i)->Juego = Juego[i];
+        strcpy((juego+i)->Nombre,Nombre[i]);
+        strcpy((juego+i)->Desarrolladora,Desarrolladora[i]);
+        (juego+i)->Genero = Genero[i];
+
+        al_add(juegos,(juego+i));
+    }
+
+    for(i=0;i<7;i++)
+    {
+        (cargas+i)->Juego = idsjuegos[i];
+        (cargas+i)->Usuario = idsusuario[i];
+        (cargas+i)->Puntaje = Puntaje[i];
+
+        al_add(carga,(cargas+i));
+    }
+
 }

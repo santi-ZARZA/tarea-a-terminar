@@ -355,7 +355,7 @@ int al_indexOf(ArrayList* this, void* pElement)
         {
             for(i=0;i<this->size;i++)
             {
-                if(*(this->pElements+i) == pElement)
+                if(this->pElements[i] == pElement)
                 {
                     returnAux = i;
                     break;

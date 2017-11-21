@@ -16,20 +16,24 @@ typedef struct
 
 typedef struct
 {
-    int Usuario;///     El IDENTIFICADOR NUMERICO DEL USUARIO.
     int Juego;///       El IDENTIFICADOR NUMERICO DEL JUEGO.
     char Nombre[30];///     NOMBRE DEL VIDEOJUEGO.
     char Desarrolladora[20];///    EL NOMBRE DE LA DESARROLLADORA DEL VIDEOJUEGO.
     int Genero;///      TIPO DE VIDEOJUEGO.
-    int Puntaje;///     PUNTAJE DADO POR JUGADOR/ES.
 }eGame;
 
+typedef struct
+{
+    int Usuario;///     El IDENTIFICADOR NUMERICO DEL USUARIO.
+    int Juego;///       El IDENTIFICADOR NUMERICO DEL JUEGO.
+    int Puntaje;///     PUNTAJE DADO POR JUGADOR/ES.
+}eCargados;
 
 void new_jugador(ArrayList*);
 
 void new_game(ArrayList*);
 
-void mostrarTodo(ArrayList*,ArrayList*);
+void mostrarTodo(ArrayList*,ArrayList*,ArrayList*);
 
 void menu();
 
@@ -59,6 +63,10 @@ void Mostrar_Jugadores(ArrayList*);
 
 int Compara_jugadores(void*, void*);
 
-void Cargar_juego(ArrayList*,ArrayList*);
+void Cargar_juego(ArrayList*,ArrayList*,ArrayList*);
 
-void Mostrar_Juegos_Jugadores(ArrayList*,ArrayList*);
+void Mostrar_Juegos_Jugadores(ArrayList*,ArrayList*,ArrayList*);
+
+void Mostrar_Jugadores_Juegos(ArrayList*,ArrayList*,ArrayList*);
+
+void Harcodeados(ArrayList*,ArrayList*,ArrayList*);

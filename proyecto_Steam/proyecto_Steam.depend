@@ -7,10 +7,10 @@
 	<stdio.h>
 	<stdlib.h>
 
-1510696159 c:\users\santiago\desktop\proyecto_steam\funciones.h
+1511047702 c:\users\santiago\desktop\proyecto_steam\funciones.h
 	"ArrayList.h"
 
-1510696263 source:c:\users\santiago\desktop\proyecto_steam\funciones.c
+1511223799 source:c:\users\santiago\desktop\proyecto_steam\funciones.c
 	"ArrayList.h"
 	"funciones.h"
 	<string.h>
@@ -19,7 +19,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1510397608 source:c:\users\santiago\desktop\proyecto_steam\arraylist.c
+1510959644 source:c:\users\santiago\desktop\proyecto_steam\arraylist.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
